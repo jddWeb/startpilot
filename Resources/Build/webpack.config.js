@@ -1,6 +1,10 @@
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 module.exports = {
     entry: ['./Assets/Scss/main.scss'],
+    output: {
+        path: __dirname + '../../Public/'
+    },
+    devtool: "source-map",
     module: {
         rules: [
             {
@@ -16,7 +20,7 @@ module.exports = {
     },
     plugins: [
         new MiniCssExtractPlugin({
-            filename: "[name].css",
+            filename: "Css/[name].css",
             chunkFilename: "[id].css"
         })
     ]
