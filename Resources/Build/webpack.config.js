@@ -1,27 +1,43 @@
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+
 module.exports = {
-    entry: ['./Assets/Scss/main.scss'],
+    mode: 'production',
+    entry: "./src/app.js",
     output: {
         path: __dirname + '../../Public/'
     },
+    watchOptions: {
+        aggregateTimeout: 300,
+        poll: 1000
+    },
+    watch: false,
     devtool: "source-map",
-    module: {
-        rules: [
-            {
-                test: /\.scss$/,
-                use: [
-                    MiniCssExtractPlugin.loader,
-                    "css-loader",
-                    "postcss-loader",
-                    "sass-loader"
-                ]
-            }
-        ]
+    stats: {
+        colors: true
     },
     plugins: [
         new MiniCssExtractPlugin({
             filename: "Css/[name].css",
             chunkFilename: "[id].css"
         })
-    ]
+    ],
+    module: {
+        rules: [
+            {
+                test: /\.scss$/,
+                use: [
+                    {
+                        loader: MiniCssExtractPlugin.loader
+                    }, {
+                        loader: "css-loader",
+                        options: { minimize: true}
+                    }, {
+                        loader: "sass-loader"
+                    }, {
+                        loader: "postcss-loader"
+                    }
+                ]
+            }
+        ]
+    }
 };
